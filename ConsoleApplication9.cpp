@@ -67,6 +67,7 @@ void printCard(const Cards &card)
 
 	case SUITS_CARD_RANK_8:
 	std::cout << "8";
+	std::cout << "8";
 	break;
 
 	case SUITS_CARD_RANK_9:
@@ -184,15 +185,15 @@ bool playBlackjack(const std::array<Cards,52> &deck)
 	int dealer{};
 
 	dealer += getCardValue(*ptrCard++);
+	dealer += getCardValue(*ptrCard++);
 
 	player += getCardValue(*ptrCard++);
 	player += getCardValue(*(ptrCard++));
 
+	bool isPlayerSrand = false;
+	
 	while(true)
 	{
-
-		bool isPlayerSrand = false;
-
 		std::cout << "Hit or Stand? (h/s): ";
 
 		std::string choose{};
@@ -203,32 +204,23 @@ bool playBlackjack(const std::array<Cards,52> &deck)
 		{
 
 			player += getCardValue(*ptrCard++);
+			std::cout << "score: " << player << '\n';
 
-		   std::cout << "score: " << player << '\n';
+			if (player > 21)
+			{
+				std::cout << "You lose\nWin dealer\n";
+				return false;
+			}
 		}  
 		else if (choose == "stand" || choose == "s"){
-
-			std::cout << "you score: " << player << '\n';
-
-			std::cout << "dealer score: " << dealer << '\n';
-
 			isPlayerSrand = true;
-
-			break;
 		}
 
 		if (player == 21)
 		{
-			std::cout << "You win!\n";
+			std::cout << "You win!\nDealer lose";
 			break;
 		}
-
-		if (player > 21)
-		{
-			std::cout << "You lose!\nWin dealer";
-			return false;		
-		}
-
 
 		if (dealer < 17)
 			dealer += getCardValue(*ptrCard++);
@@ -249,7 +241,7 @@ bool playBlackjack(const std::array<Cards,52> &deck)
 		{
 			if(player > dealer)
 			{
-				std::cout << "Player win\n";
+				std::cout << "Player win\nDealer lose\n";
 
 				std::cout << "you score: " << player << '\n';
 				std::cout << "dealer score: " << dealer << '\n';
